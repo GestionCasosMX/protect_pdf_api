@@ -70,3 +70,6 @@ def proteger_pdf():
         )
     except Exception as e:
         return {'error': f'No se pudo procesar el PDF: {str(e)}'}, 500
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
