@@ -22,7 +22,7 @@
       max-height: 120px;
       margin-bottom: 20px;
     }
-    h2 {
+    h2, h3 {
       color: #d80101;
     }
     label {
@@ -54,24 +54,67 @@
     button:hover {
       background-color: #b60000;
     }
+    .mensaje {
+      margin-top: 30px;
+      padding: 20px;
+      border: 1px solid #4caf50;
+      background-color: #eafaf1;
+      color: #2e7d32;
+      border-radius: 8px;
+      display: none;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <img src="https://puurav.nl/wp-content/uploads/2020/06/save-the-children-logo-png-5.png" alt="Logo institucional" class="logo">
-    <h2>Subir PDF y asignar contraseña</h2>
-    <form action="/proteger-pdf" method="post" enctype="multipart/form-data">
-      <label for="clave">Clave de acceso:</label>
-      <input type="password" id="clave" name="clave" required>
+    
+    <div id="formularioContainer">
+      <h2>Subir PDF y asignar contraseña</h2>
+      <form id="formularioPDF" action="/proteger-pdf" method="post" enctype="multipart/form-data" target="iframeDescarga" onsubmit="manejarEnvio();">
+        <label for="clave">Clave de acceso:</label>
+        <input type="password" id="clave" name="clave" required>
 
-      <label for="file">Archivo PDF:</label>
-      <input type="file" id="file" name="file" required>
+        <label for="file">Archivo PDF:</label>
+        <input type="file" id="file" name="file" required>
 
-      <label for="password">Contraseña para proteger el PDF:</label>
-      <input type="text" id="password" name="password" required>
+        <label for="password">Contraseña para proteger el PDF:</label>
+        <input type="text" id="password" name="password" required>
 
-      <button type="submit">Proteger PDF</button>
-    </form>
+        <button type="submit">Proteger PDF</button>
+      </form>
+    </div>
+
+    <div class="mensaje" id="mensajeDescarga">
+      <h3>✅ Documento descargado</h3>
+      <p>Ahora sube el documento a tu aplicación y elimina el archivo de tu computadora por seguridad.</p>
+      <button onclick="reiniciarFormulario()">Encriptar nuevo documento</button>
+    </div>
   </div>
+
+  <iframe name="iframeDescarga" style="display:none;"></iframe>
+
+  <script>
+    function manejarEnvio() {
+      setTimeout(function () {
+        // Oculta el formulario
+        document.getElementById("formularioContainer").style.display = "none";
+
+        // Muestra el mensaje de éxito
+        document.getElementById("mensajeDescarga").style.display = "block";
+
+        // Limpia el formulario
+        document.getElementById("formularioPDF").reset();
+      }, 1000);
+    }
+
+    function reiniciarFormulario() {
+      // Muestra el formulario otra vez
+      document.getElementById("formularioContainer").style.display = "block";
+
+      // Oculta el mensaje
+      document.getElementById("mensajeDescarga").style.display = "none";
+    }
+  </script>
 </body>
 </html>
